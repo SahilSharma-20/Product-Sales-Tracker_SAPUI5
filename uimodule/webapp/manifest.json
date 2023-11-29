@@ -1,0 +1,155 @@
+{
+  "_version": "1.42.0",
+  "sap.app": {
+    "id": "tutorial.products",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap-ux/fiori-freestyle-writer:basic",
+      "version": "0.14.9"
+    },
+    "crossNavigation": {
+      "inbounds": {
+        "intent1": {
+          "signature": {
+            "parameters": {},
+            "additionalParameters": "allowed"
+          },
+          "semanticObject": "uimodule",
+          "action": "display",
+          "title": "Products",
+          "icon": "sap-icon://add"
+        }
+      }
+    },
+    "dataSources": {
+      "V2NorthwindNorthwind.svc": {
+        "uri": "V2/Northwind/Northwind.svc/",
+        "type": "OData",
+        "settings": {
+          "localUri": "localService/V2/Northwind/Northwind.svc//metadata.xml"
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": true,
+    "dependencies": {
+      "minUI5Version": "1.102.0",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "tutorial.products.i18n.i18n"
+        }
+      },
+      "services": {
+        "ShellUIService": {
+          "factoryName": "sap.ushell.ui5service.ShellUIService",
+          "lazy": false,
+          "settings": {
+            "setTitle": "auto"
+          }
+        }
+      },
+      "": {
+        "type": "sap.ui.model.odata.v2.ODataModel",
+        "settings": {
+          "defaultOperationMode": "Server",
+          "defaultBindingMode": "TwoWay",
+          "defaultCountMode": "Inline",
+          "preload": true
+        },
+        "dataSource": "V2NorthwindNorthwind.svc"
+      }
+    },
+    "resources": {
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ]
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "viewType": "XML",
+        "async": true,
+        "viewPath": "tutorial.products.view",
+        "controlAggregation": "pages",
+        "controlId": "app",
+        "clearControlAggregation": false
+      },
+      "routes": [
+        {
+          "name": "RouteProducts",
+          "pattern": ":?query:",
+          "target": [
+            "TargetProducts"
+          ]
+        },
+        {
+          "name": "ProductDetail",
+          "pattern": "Product/{productId}",
+          "target": [
+            "TargetProductDetail"
+          ]
+        }
+      ],
+      "targets": {
+        "TargetProducts": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "Products",
+          "viewName": "Products"
+        },
+        "TargetProductDetail": {
+          "viewType": "XML",
+          "viewId": "ProductDetail",
+          "viewName": "ProductDetail"
+        }
+      }
+    },
+    "rootView": {
+      "viewName": "tutorial.products.view.App",
+      "type": "XML",
+      "async": true,
+      "id": "App"
+    }
+  },
+  "sap.cloud": {
+    "service": "products.service"
+  }
+}
